@@ -1,0 +1,134 @@
+﻿@model WhereAreMyMoney_2._0.Models.Operation
+
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Create";
+    }
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        debugger;
+        $(document).ready(function () {
+            
+            $('#buttonCost').on('click', getCategoriesCost);
+            $('#buttonEarn').on('click', getCategoriesEarn);
+           
+        });
+
+        function getCategoriesCost() {
+            $('#buttonCost').attr('class', 'btn btn-primary');
+            $('#buttonEarn').attr('class', 'btn btn-default');
+            $.ajax({
+                url: "/api/CategoriesApi/getCategoriesCost/",
+                dataType: "json",
+                method: "GET",
+                success: function (categories) {
+
+                    var content = "";
+                    $.each(categories, function (key, value) {
+                        content += "" +
+                            '<option value = "' + value.Id + '">' + value.Name + '</option>';
+                    });
+                    $('#CategoryId').html('');
+                    $('#CategoryId').html(content);
+
+                },
+                error: function (data) {
+                    alert('Error');
+                }
+
+            });
+        };
+
+        function getCategoriesEarn() {
+            $('#buttonEarn').attr('class', 'btn btn-primary');
+            $('#buttonCost').attr('class', 'btn btn-default');
+            $.ajax({
+                url: "/api/CategoriesApi/getCategoriesEarn/",
+                dataType: "json",
+                method: "GET",
+                success: function (categories) {
+                    var content = "";
+                    $.each(categories, function (key, value) {
+                        content += "" +
+                            '<option value = "' + value.Id + '">' + value.Name + '</option>';
+                    });
+                    $('#CategoryId').html('');
+                    $('#CategoryId').html(content);
+
+                },
+                error: function (data) {
+                    alert('Error');
+                }
+
+            });
+        };
+        
+    </script>
+</head>
+<body>
+    <h2>Create</h2>
+
+    @using (Html.BeginForm("Create", "Operations"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Operation</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Тип операции", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <button type="button" id="buttonCost" class="btn btn-default" value="Cost">Расход</button>
+                    <button type="button" id="buttonEarn" class="btn btn-default" value="Earn">Доход</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Название операции", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Выберите категорию", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Выберите счет", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AccountId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить операцию" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Вернуться к списку операций", "Index")
+    </div>
+</body>
+</html>
+
+

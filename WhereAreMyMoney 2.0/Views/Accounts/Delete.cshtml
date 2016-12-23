@@ -1,0 +1,41 @@
+﻿@model WhereAreMyMoney_2._0.Models.Account
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Удаление счета</h2>
+
+<h3>Вы уверенны, что хотите удалить данный счет?</h3>
+<div>
+    <h4>Account</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Название")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Сумма")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку счетов", "Index")
+        </div>
+    }
+</div>

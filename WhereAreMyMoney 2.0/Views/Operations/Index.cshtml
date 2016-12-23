@@ -1,0 +1,132 @@
+﻿@model IEnumerable<WhereAreMyMoney_2._0.Models.Operation>
+
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        debugger;
+        $(document).ready(function () {
+
+            $('#FilterButton').on('click', getFilteredOperations);
+            $('#CategoryId').attr('class', 'btn btn-primary dropdown-toggle');
+            $('#AccountId').attr('class', 'btn btn-primary dropdown-toggle');
+            $('#DatePicker').attr('class', 'btn btn-primary dropdown-toggle');
+            $('#TypePicker').attr('class', 'btn btn-primary dropdown-toggle');
+        });
+
+        function getFilteredOperations() {
+            var categoryId = $('#CategoryId').val();
+            var accountId = $('#AccountId').val();
+            var date = $('#DatePicker').val();
+            var type = $('#TypePicker').val();
+            var id = categoryId + ',' + accountId + ',' + date + ',' + type;
+            alert(id);
+            $.ajax({
+                url: "/api/OperationsApi/getOperationsBySeveralParamentres/" + id,
+                dataType: "json",
+                method: "GET",
+                success: function (operations) {
+                    var content = "";
+                    $.each(operations, function (key, value) {
+                        var valDate = new Date(value.Date);
+                        content += '<tr class="itemTr">' +
+                            '<td>' + value.Name + '</td>' + 
+                            '<td>' + value.Category.Name + '</td>' + 
+                            '<td>' + value.Account.Name + '</td>' + 
+                            '<td>' + value.Amount + '</td>' + 
+                            '<td>' + valDate.toDateString() + '</td>' +
+                            '<td>' + '<a class="btn btn-primary" href="/Operations/Edit/' + value.Id + '">Редактировать</a>' +
+                            ' <a class="btn btn-primary" href="/Operations/Delete/' + value.Id + '">Удалить</a></td>'
+                            '</tr>'
+                    });
+                    $('.itemTr').remove();
+                    $('#myTable').append(content);
+                },
+                error: function () {
+                    alert('Error');
+                }
+
+            });
+        };
+
+
+    </script>
+
+</head>
+<body>
+    <h2>Управление операциями</h2>
+
+    <p>
+
+        @Html.ActionLink("Добавить операцию", "Create", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+        <fieldset name="filter">
+            @Html.DisplayName("Фильтр по таблице:")
+
+            @Html.DropDownList("CategoryId", "По категории")
+
+            @Html.DropDownList("AccountId", "По счету")
+
+            @Html.DropDownList("DatePicker", "По промежутку времени")
+
+            @Html.DropDownList("TypePicker", "По типу операции")
+
+            <button class="btn btn-primary" id="FilterButton">Найти</button>
+        </fieldset>
+
+
+
+    </p>
+    <table class="table table-striped" id="myTable">
+        <tr class="headTr">
+            <th>
+                @Html.Label("Название операции", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.Label("Название категории", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.Label("Название счета", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.Label("Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.Label("Дата", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="itemTr">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @item.Date.ToShortDateString()
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
+

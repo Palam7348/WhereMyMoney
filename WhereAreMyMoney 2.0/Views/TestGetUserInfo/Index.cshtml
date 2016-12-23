@@ -1,0 +1,43 @@
+﻿@model WhereAreMyMoney_2._0.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    if (Request.IsAuthenticated)
+    {
+        <div>
+            <h4>User profile</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Year)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Year)
+                </dd>
+
+            </dl>
+        </div>
+    }
+}
+
