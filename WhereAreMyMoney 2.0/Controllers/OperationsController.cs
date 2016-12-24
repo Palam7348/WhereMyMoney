@@ -198,7 +198,7 @@ namespace WhereAreMyMoney_2._0.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Operation operation = db.Operations.Find(id);
-            int amount = operation.Amount;
+            double amount = operation.Amount;
             Account account = db.Accounts.Single(e => e.Id == operation.AccountId);
             Category category = db.Categories.Single(e => e.Id == operation.CategoryId);
             if (category.Type.Equals(cost))

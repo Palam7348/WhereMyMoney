@@ -208,6 +208,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\AccountsApiController.cs" />
     <Compile Include="ApiControllers\CategoriesApiController.cs" />
+    <Compile Include="ApiControllers\HelpClasses\CategoryCostPack.cs" />
     <Compile Include="ApiControllers\OperationsApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -250,6 +251,10 @@
     <Compile Include="Migrations\201612221706132_fixedModels.cs" />
     <Compile Include="Migrations\201612221706132_fixedModels.Designer.cs">
       <DependentUpon>201612221706132_fixedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612232218581_AmountConvertedToDouble.cs" />
+    <Compile Include="Migrations\201612232218581_AmountConvertedToDouble.Designer.cs">
+      <DependentUpon>201612232218581_AmountConvertedToDouble.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
@@ -355,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612221706132_fixedModels.resx">
       <DependentUpon>201612221706132_fixedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612232218581_AmountConvertedToDouble.resx">
+      <DependentUpon>201612232218581_AmountConvertedToDouble.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

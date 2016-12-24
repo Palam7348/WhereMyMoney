@@ -13,7 +13,8 @@ namespace WhereAreMyMoney_2._0.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public int Amount { get; set; }
+        [RegularExpression(@"[\d]{1,4}([.,][\d]{1,2})?")]
+        public double Amount { get; set; }
 
         public string UserId { get; set; }
     }
