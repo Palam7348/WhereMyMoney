@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace WhereAreMyMoney_2._0.Controllers
 {
+    [Authorize]
     public class AccountsController : Controller
     {
         private ApplicationContext db = new ApplicationContext();
@@ -95,6 +96,8 @@ namespace WhereAreMyMoney_2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Amount")] Account account)
         {
+            string currentUserId = User.Identity.GetUserId();
+            account.UserId = currentUserId;
             if (ModelState.IsValid)
             {
                 db.Entry(account).State = EntityState.Modified;

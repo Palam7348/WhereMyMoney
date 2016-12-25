@@ -6,14 +6,13 @@
     @{
         ViewBag.Title = "Create";
     }
-    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    
     <script>
         debugger;
-        $(document).ready(function () {
-            
+
             $('#buttonCost').on('click', getCategoriesCost);
             $('#buttonEarn').on('click', getCategoriesEarn);
-           
         });
 
         function getCategoriesCost() {
@@ -65,69 +64,91 @@
             });
         };
         
+
+        
     </script>
+    <style>
+        aside {
+            background: #f0f0f0; /* Цвет фона */
+            padding: 10px; /* Поля */
+            width: 200px; /* Ширина сайдбара */
+            float: right; /* Обтекание слева */
+        }
+
+        article {
+            margin-right: 240px; /* Отступ справа */
+            display: block; /* Блочный элемент */
+        }
+    </style>
 </head>
 <body>
-    <h2>Create</h2>
+    <aside>
+        <h5>Быстрый переход</h5>
+        @Html.ActionLink("Добавить категорию", "Create", "Categories", null, htmlAttributes: new { @class = "btn btn-primary" })
+        @Html.ActionLink("Добавить счет", "Create", "Accounts", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </aside>
+    <h2>Добавление операции</h2>
 
-    @using (Html.BeginForm("Create", "Operations"))
-    {
-        @Html.AntiForgeryToken()
+    <article>
+        @using (Html.BeginForm("Create", "Operations"))
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Operation</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
 
-            <div class="form-group">
-                @Html.Label("Тип операции", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <button type="button" id="buttonCost" class="btn btn-default" value="Cost">Расход</button>
-                    <button type="button" id="buttonEarn" class="btn btn-default" value="Earn">Доход</button>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("Тип операции", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <button type="button" id="buttonCost" class="btn btn-default" value="Cost">Расход</button>
+                        <button type="button" id="buttonEarn" class="btn btn-default" value="Earn">Доход</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Название операции", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Выберите категорию", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Выберите счет", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("AccountId", null, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Добавить операцию" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
+        }
 
-            <div class="form-group">
-                @Html.Label("Название операции", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Выберите категорию", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Выберите счет", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("AccountId", null, htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Добавить операцию" class="btn btn-default" />
-                </div>
-            </div>
+        <div>
+            @Html.ActionLink("Вернуться к списку операций", "Index")
         </div>
-    }
-
-    <div>
-        @Html.ActionLink("Вернуться к списку операций", "Index")
-    </div>
+    </article>
+   
 </body>
 </html>
 

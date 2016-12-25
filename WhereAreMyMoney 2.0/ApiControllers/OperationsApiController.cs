@@ -124,11 +124,11 @@ namespace WhereAreMyMoney_2._0.ApiControllers
                                 break;
                         }
                     }
-                    if (type.Equals("Cost"))
+                    if (type.Equals("Расход"))
                     {
                         ourOperations = ourOperations.Where(e => e.Category.Type.Equals(type)).ToList();
                     }
-                    if (type.Equals("Earn"))
+                    if (type.Equals("Доход"))
                     {
                         ourOperations = ourOperations.Where(e => e.Category.Type.Equals(type)).ToList();
                     }

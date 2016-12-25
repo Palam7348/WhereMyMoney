@@ -14,6 +14,8 @@ namespace WhereAreMyMoney_2._0.Controllers
 {
     public class AccountController : Controller
     {
+
+        private ApplicationContext db = new ApplicationContext();
         private ApplicationUserManager UserManager
         {
             get
@@ -36,6 +38,25 @@ namespace WhereAreMyMoney_2._0.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var newUser = await UserManager.FindAsync(model.Email, model.Password);
+                    if (newUser != null)
+                    {
+                        db.Categories.Add(new Category { Name = "Продукты", Description = "Покупка продуктов на рынке и в супермаркетах", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Транспорт", Description = "Траты на общественный транспорт, переезды, билеты на поезда", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Зарплата", Description = "Зарплата с постоянного места работы", Type = "Доход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Квартира", Description = "Оплата за квартиру и коммунальные услуги", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Связь", Description = "Телефон и интернет", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Отдых", Description = "Поездки на отдых, развлечения", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Проценты", Description = "Доход от депозитов", Type = "Доход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Долги", Description = "Выплата долгов", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Кредиты", Description = "Выплаты по кредитам", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Автомобиль", Description = "Починка, ТО, бензин", Type = "Расход", UserId = newUser.Id });
+                        db.Categories.Add(new Category { Name = "Образование", Description = "Курсы, университет, конференции", Type = "Расход", UserId = newUser.Id });
+                        db.Accounts.Add(new Account { Name = "Кошелек", Amount = 0, UserId = newUser.Id });
+                        db.Accounts.Add(new Account { Name = "Банковская карта №1", Amount = 0, UserId = newUser.Id });
+                        db.Accounts.Add(new Account { Name = "Банковская карта №2", Amount = 0, UserId = newUser.Id });
+                        db.SaveChanges();
+                    }
                     return RedirectToAction("Login", "Account");
                 }
                 else

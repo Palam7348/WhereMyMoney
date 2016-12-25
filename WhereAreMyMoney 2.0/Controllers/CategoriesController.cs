@@ -96,6 +96,8 @@ namespace WhereAreMyMoney_2._0.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Description,Name,Type")] Category category)
         {
+            string currentUserId = User.Identity.GetUserId();
+            category.UserId = currentUserId;
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;

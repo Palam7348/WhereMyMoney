@@ -18,7 +18,6 @@ namespace WhereAreMyMoney_2._0.Models
 
         public int AccountId { get; set; }
         [Required]
-        [RegularExpression(@"[\d]{1,4}([.,][\d]{1,2})?")]
         public double Amount { get; set; }
         [Required]
         public DateTime Date { get; set; }

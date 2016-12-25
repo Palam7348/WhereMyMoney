@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace WhereAreMyMoney_2._0.Controllers
 {
+    [Authorize]
     public class OperationsController : Controller
     {
         private const string cost = "Расход";

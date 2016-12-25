@@ -24,7 +24,7 @@
             var date = $('#DatePicker').val();
             var type = $('#TypePicker').val();
             var id = categoryId + ',' + accountId + ',' + date + ',' + type;
-            alert(id);
+           // alert(id);
             $.ajax({
                 url: "/api/OperationsApi/getOperationsBySeveralParamentres/" + id,
                 dataType: "json",
@@ -38,7 +38,7 @@
                             '<td>' + value.Category.Name + '</td>' + 
                             '<td>' + value.Account.Name + '</td>' + 
                             '<td>' + value.Amount + '</td>' + 
-                            '<td>' + valDate.toDateString() + '</td>' +
+                            '<td>' + valDate.getDate() + '.' + (valDate.getMonth() + 1) + '.' + valDate.getFullYear() + '</td>' +
                             '<td>' + '<a class="btn btn-primary" href="/Operations/Edit/' + value.Id + '">Редактировать</a>' +
                             ' <a class="btn btn-primary" href="/Operations/Delete/' + value.Id + '">Удалить</a></td>'
                             '</tr>'
